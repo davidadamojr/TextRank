@@ -1,4 +1,6 @@
-This is a python implementation of TextRank for keyword and sentence extraction as done in http://acl.ldc.upenn.edu/acl2004/emnlp/pdf/Mihalcea.pdf. However, this implementation uses Levenshtein Distance as the relation between text units.
+This is a python implementation of TextRank for automatic keyword and sentence extraction (summarization) as done in http://acl.ldc.upenn.edu/acl2004/emnlp/pdf/Mihalcea.pdf. However, this implementation uses Levenshtein Distance as the relation between text units.
+
+This implementation carries out automatic keyword and sentence extraction on 10 articles gotten from http://theonion.com
 
  - 100 word summary
  - Number of keywords extracted is relative to the size of the text (a third of the number of nodes in the graph)
