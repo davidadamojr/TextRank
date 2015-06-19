@@ -6,6 +6,7 @@ External dependencies: nltk, numpy, networkx
 Based on https://gist.github.com/voidfiles/1646117
 """
 
+import io
 import nltk
 import itertools
 from operator import itemgetter
@@ -143,13 +144,13 @@ def extractSentences(text):
 def writeFiles(summary, keyphrases, fileName):
     "outputs the keyphrases and summaries to appropriate files"
     print "Generating output to " + 'keywords/' + fileName
-    keyphraseFile = open('keywords/' + fileName, 'w')
+    keyphraseFile = io.open('keywords/' + fileName, 'w')
     for keyphrase in keyphrases:
         keyphraseFile.write(keyphrase + '\n')
     keyphraseFile.close()
 
     print "Generating output to " + 'summaries/' + fileName
-    summaryFile = open('summaries/' + fileName, 'w')
+    summaryFile = io.open('summaries/' + fileName, 'w')
     summaryFile.write(summary)
     summaryFile.close()
 
@@ -160,7 +161,7 @@ def writeFiles(summary, keyphrases, fileName):
 articles = os.listdir("articles")
 for article in articles:
     print 'Reading articles/' + article
-    articleFile = open('articles/' + article, 'r')
+    articleFile = io.open('articles/' + article, 'r')
     text = articleFile.read()
     keyphrases = extractKeyphrases(text)
     summary = extractSentences(text)
