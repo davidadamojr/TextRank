@@ -1,5 +1,5 @@
 """
-From this paper: http://acl.ldc.upenn.edu/acl2004/emnlp/pdf/Mihalcea.pdf 
+From this paper: https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf
 
 External dependencies: nltk, numpy, networkx
 
