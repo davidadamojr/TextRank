@@ -9,7 +9,6 @@ Based on https://gist.github.com/voidfiles/1646117
 import io
 import nltk
 import itertools
-from operator import itemgetter
 import networkx as nx
 import os
 
@@ -27,7 +26,7 @@ def unique_everseen(iterable, key=None):
     seen = set()
     seen_add = seen.add
     if key is None:
-        for element in itertools.ifilterfalse(seen.__contains__, iterable):
+        for element in [x for x in iterable if x in seen]:
             seen_add(element)
             yield element
     else:
@@ -74,7 +73,7 @@ def extractKeyphrases(text):
     #assign POS tags to the words in the text
     tagged = nltk.pos_tag(wordTokens)
     textlist = [x[0] for x in tagged]
-    
+
     tagged = filter_for_tags(tagged)
     tagged = normalize(tagged)
 
@@ -92,7 +91,7 @@ def extractKeyphrases(text):
     keyphrases = sorted(calculated_page_rank, key=calculated_page_rank.get, reverse=True)
 
     #the number of keyphrases returned will be relative to the size of the text (a third of the number of vertices)
-    aThird = len(word_set_list) / 3
+    aThird = len(word_set_list) // 3
     keyphrases = keyphrases[0:aThird+1]
 
     #take keyphrases with multiple words into consideration as done in the paper - if two words are adjacent in the text and are selected as keywords, join them
@@ -117,10 +116,10 @@ def extractKeyphrases(text):
             #it definitely has no chance of being a keyphrase at this point    
             if j == len(textlist)-1 and secondWord in keyphrases and secondWord not in dealtWith:
                 modifiedKeyphrases.add(secondWord)
-        
+
         i = i + 1
         j = j + 1
-        
+
     return modifiedKeyphrases
 
 def extractSentences(text):
@@ -143,24 +142,24 @@ def extractSentences(text):
 
 def writeFiles(summary, keyphrases, fileName):
     "outputs the keyphrases and summaries to appropriate files"
-    print "Generating output to " + 'keywords/' + fileName
+    print("Generating output to " + 'keywords/' + fileName)
     keyphraseFile = io.open('keywords/' + fileName, 'w')
     for keyphrase in keyphrases:
         keyphraseFile.write(keyphrase + '\n')
     keyphraseFile.close()
 
-    print "Generating output to " + 'summaries/' + fileName
+    print("Generating output to " + 'summaries/' + fileName)
     summaryFile = io.open('summaries/' + fileName, 'w')
     summaryFile.write(summary)
     summaryFile.close()
 
-    print "-"
+    print("-")
 
 
 #retrieve each of the articles
 articles = os.listdir("articles")
 for article in articles:
-    print 'Reading articles/' + article
+    print('Reading articles/' + article)
     articleFile = io.open('articles/' + article, 'r')
     text = articleFile.read()
     keyphrases = extractKeyphrases(text)
