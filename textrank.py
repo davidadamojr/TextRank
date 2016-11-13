@@ -5,13 +5,26 @@ From this paper:
 External dependencies: nltk, numpy, networkx
 
 Based on https://gist.github.com/voidfiles/1646117
+         https://github.com/davidadamojr/TextRank
 """
 
 import io
-import nltk
 import itertools
-import networkx as nx
 import os
+
+import click
+import networkx as nx
+import nltk
+
+
+__version__ = '0.1.0'
+__author__ = 'Unknown'
+__email__ = ''
+
+
+@click.group()
+def cli():
+    pass
 
 
 # apply syntactic filters based on POS tags
@@ -177,12 +190,26 @@ def writeFiles(summary, keyphrases, fileName):
     print("-")
 
 
-# retrieve each of the articles
-articles = os.listdir("articles")
-for article in articles:
-    print('Reading articles/' + article)
-    articleFile = io.open('articles/' + article, 'r')
-    text = articleFile.read()
-    keyphrases = extractKeyphrases(text)
-    summary = extractSentences(text)
-    writeFiles(summary, keyphrases, article)
+def summarize_all():
+    # retrieve each of the articles
+    articles = os.listdir("articles")
+    for article in articles:
+        print('Reading articles/' + article)
+        articleFile = io.open('articles/' + article, 'r')
+        text = articleFile.read()
+        keyphrases = extractKeyphrases(text)
+        summary = extractSentences(text)
+        writeFiles(summary, keyphrases, article)
+
+
+@cli.command()
+@click.argument('filename')
+def summarize(filename):
+    with open(filename) as fin:
+        text = fin.read()
+        summary = extractSentences(text)
+        print(summary)
+
+
+if __name__ == '__main__':
+    cli()
