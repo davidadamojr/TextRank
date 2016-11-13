@@ -30,7 +30,7 @@ def unique_everseen(iterable, key=None):
     seen = set()
     seen_add = seen.add
     if key is None:
-        for element in [x for x in iterable if x in seen]:
+        for element in [x for x in iterable if x not in seen]:
             seen_add(element)
             yield element
     else:
