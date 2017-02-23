@@ -9,7 +9,7 @@ setup(
     author='Unknown',
     author_email='',
     url='http://github.com/suminb/textrank',
-    install_requires=['networkx', 'nltk', 'numpy', 'click'],
+    install_requires=['networkx>=1.11.0', 'nltk>=3.2.1', 'numpy>=1.11.2', 'click>=6.6'],
     entry_points='''
         [console_scripts]
         textrank=main:cli
