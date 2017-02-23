@@ -1,25 +1,17 @@
-#!/usr/bin/env python
-
-from distutils.core import setup
-
-import textrank
+from setuptools import setup
 
 
-def readme():
-    try:
-        with open('README.rst') as f:
-            return f.read()
-    except:
-        return '(Could not read from README.rst)'
-
-
-setup(name='textrank',
-      py_modules=['textrank'],
-      version=textrank.__version__,
-      description='TextRank implementation in Python',
-      long_description=readme(),
-      author=textrank.__author__,
-      author_email=textrank.__email__,
-      url='http://github.com/suminb/textrank',
-      packages=[],
-      )
+setup(
+    name='textrank',
+    py_modules=['textrank', 'main'],
+    version='0.1.0',
+    description='TextRank implementation in Python',
+    author='Unknown',
+    author_email='',
+    url='http://github.com/suminb/textrank',
+    install_requires=['networkx', 'nltk', 'numpy', 'click'],
+    entry_points='''
+        [console_scripts]
+        textrank=main:cli
+    ''',
+)
