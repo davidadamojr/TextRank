@@ -8,13 +8,14 @@ def cli():
 
 
 @cli.command()
-def download_resources():
+def initialize():
+    """Download required nltk libraries."""
     textrank.setup_environment()
 
 
 @cli.command()
 @click.argument('filename')
-def summarize(filename):
+def extract_summary(filename):
     """Print summary text to stdout."""
     with open(filename) as f:
         summary = textrank.extract_sentences(f.read())
@@ -23,8 +24,8 @@ def summarize(filename):
 
 @cli.command()
 @click.argument('filename')
-def phrases(filename):
-    """Print key phrases to stdout."""
+def extract_phrases(filename):
+    """Print key-phrases to stdout."""
     with open(filename) as f:
         phrases = textrank.extract_key_phrases(f.read())
         print(phrases)
