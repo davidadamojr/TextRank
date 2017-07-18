@@ -161,7 +161,7 @@ def extract_key_phrases(text):
     return modified_key_phrases
 
 
-def extract_sentences(text, summary_length=100, language='english'):
+def extract_sentences(text, summary_length=100, clean_sentences=False, language='english'):
     """Return a paragraph formatted summary of the source text.
 
     :param text: A string.
@@ -176,13 +176,15 @@ def extract_sentences(text, summary_length=100, language='english'):
     sentences = sorted(calculated_page_rank, key=calculated_page_rank.get,
                        reverse=True)
 
-    # return a summary_length word summary of full sentences
+    # return a 100 word summary
     summary = ' '.join(sentences)
     summary_words = summary.split()
     summary_words = summary_words[0:summary_length]
-    last_dot = max(idx for idx, word in enumerate(summary_words) if word.find('.') != -1) + 1
-    summary = ' '.join(summary_words[0:last_dot])
-
+    if clean_sentences:
+        last_dot = max(idx for idx, word in enumerate(summary_words) if word.find('.') != -1) + 1
+        summary = ' '.join(summary_words[0:last_dot])
+    else:
+        summary = ' '.join(summary_words)
 
     return summary
 
