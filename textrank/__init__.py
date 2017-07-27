@@ -180,8 +180,9 @@ def extract_sentences(text, summary_length=100, clean_sentences=False, language=
     summary = ' '.join(sentences)
     summary_words = summary.split()
     summary_words = summary_words[0:summary_length]
-    if clean_sentences:
-        last_dot = max(idx for idx, word in enumerate(summary_words) if word.find('.') != -1) + 1
+    dot_indices = [idx for idx, word in enumerate(summary_words) if word.find('.') != -1]
+    if clean_sentences and dot_indices:
+        last_dot = max(dot_indices) + 1
         summary = ' '.join(summary_words[0:last_dot])
     else:
         summary = ' '.join(summary_words)
