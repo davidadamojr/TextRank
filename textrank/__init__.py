@@ -161,12 +161,12 @@ def extract_key_phrases(text):
     return modified_key_phrases
 
 
-def extract_sentences(text):
+def extract_sentences(text, summary_length=100, clean_sentences=False, language='english'):
     """Return a paragraph formatted summary of the source text.
 
     :param text: A string.
     """
-    sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    sent_detector = nltk.data.load('tokenizers/punkt/'+language+'.pickle')
     sentence_tokens = sent_detector.tokenize(text.strip())
     graph = build_graph(sentence_tokens)
 
@@ -179,8 +179,13 @@ def extract_sentences(text):
     # return a 100 word summary
     summary = ' '.join(sentences)
     summary_words = summary.split()
-    summary_words = summary_words[0:101]
-    summary = ' '.join(summary_words)
+    summary_words = summary_words[0:summary_length]
+    dot_indices = [idx for idx, word in enumerate(summary_words) if word.find('.') != -1]
+    if clean_sentences and dot_indices:
+        last_dot = max(dot_indices) + 1
+        summary = ' '.join(summary_words[0:last_dot])
+    else:
+        summary = ' '.join(summary_words)
 
     return summary
 
