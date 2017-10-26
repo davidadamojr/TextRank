@@ -1,0 +1,11 @@
+name: davidadamojr_TextRank
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.6
+  - numpy=1.11.*
+  - networkx=1.11
+  - cython=0.25.*
+  - nltk=3.2.*
+  - click>=6.6
