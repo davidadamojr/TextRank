@@ -7,11 +7,13 @@ Based on:
     https://gist.github.com/voidfiles/1646117
     https://github.com/davidadamojr/TextRank
 """
+import editdistance
 import io
 import itertools
 import networkx as nx
 import nltk
 import os
+
 
 
 def setup_environment():
@@ -52,28 +54,6 @@ def unique_everseen(iterable, key=None):
                 yield element
 
 
-def levenshtein_distance(first, second):
-    """Return the Levenshtein distance between two strings.
-
-    Based on:
-        http://rosettacode.org/wiki/Levenshtein_distance#Python
-    """
-    if len(first) > len(second):
-        first, second = second, first
-    distances = range(len(first) + 1)
-    for index2, char2 in enumerate(second):
-        new_distances = [index2 + 1]
-        for index1, char1 in enumerate(first):
-            if char1 == char2:
-                new_distances.append(distances[index1])
-            else:
-                new_distances.append(1 + min((distances[index1],
-                                             distances[index1 + 1],
-                                             new_distances[-1])))
-        distances = new_distances
-    return distances[-1]
-
-
 def build_graph(nodes):
     """Return a networkx graph instance.
 
@@ -87,7 +67,7 @@ def build_graph(nodes):
     for pair in nodePairs:
         firstString = pair[0]
         secondString = pair[1]
-        levDistance = levenshtein_distance(firstString, secondString)
+        levDistance = editdistance.eval(firstString, secondString)
         gr.add_edge(firstString, secondString, weight=levDistance)
 
     return gr
