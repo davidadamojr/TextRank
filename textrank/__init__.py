@@ -15,7 +15,6 @@ import nltk
 import os
 
 
-
 def setup_environment():
     """Download required resources."""
     nltk.download('punkt')
