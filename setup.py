@@ -9,7 +9,7 @@ setup(
     author='Unknown',
     author_email='',
     url='http://github.com/suminb/textrank',
-    install_requires=['networkx>=1.11.0', 'nltk>=3.2.1', 'numpy>=1.11.2', 'click>=6.6'],
+    install_requires=['networkx>=1.11.0', 'nltk>=3.2.1', 'numpy>=1.11.2', 'click>=6.6', 'editdistance==0.4'],
     packages=find_packages(),
     entry_points='''
         [console_scripts]
