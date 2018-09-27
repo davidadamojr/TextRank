@@ -42,15 +42,12 @@ def unique_everseen(iterable, key=None):
     seen = set()
     seen_add = seen.add
     if key is None:
-        for element in [x for x in iterable if x not in seen]:
-            seen_add(element)
+        def key(x): return x
+    for element in iterable:
+        k = key(element)
+        if k not in seen:
+            seen_add(k)
             yield element
-    else:
-        for element in iterable:
-            k = key(element)
-            if k not in seen:
-                seen_add(k)
-                yield element
 
 
 def build_graph(nodes):
