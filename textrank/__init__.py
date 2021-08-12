@@ -108,31 +108,22 @@ def extract_key_phrases(text):
     # paper - if two words are adjacent in the text and are selected as
     # keywords, join them together
     modified_key_phrases = set([])
-    # keeps track of individual keywords that have been joined to form a
-    # keyphrase
-    dealt_with = set([])
+
     i = 0
-    j = 1
-    while j < len(textlist):
-        first = textlist[i]
-        second = textlist[j]
-        if first in keyphrases and second in keyphrases:
-            keyphrase = first + ' ' + second
-            modified_key_phrases.add(keyphrase)
-            dealt_with.add(first)
-            dealt_with.add(second)
+    while i < len(textlist):
+        w = textlist[i]
+        if w in keyphrases:
+            phrase_ws = [w]
+            i += 1
+            while i < len(textlist) and textlist[i] in keyphrases:
+                phrase_ws.append(textlist[i])
+                i += 1
+
+            phrase = ' '.join(phrase_ws)
+            if phrase not in modified_key_phrases:
+                modified_key_phrases.add(phrase)
         else:
-            if first in keyphrases and first not in dealt_with:
-                modified_key_phrases.add(first)
-
-            # if this is the last word in the text, and it is a keyword, it
-            # definitely has no chance of being a keyphrase at this point
-            if j == len(textlist) - 1 and second in keyphrases and \
-                    second not in dealt_with:
-                modified_key_phrases.add(second)
-
-        i = i + 1
-        j = j + 1
+            i += 1
 
     return modified_key_phrases
 
