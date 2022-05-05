@@ -11,7 +11,7 @@ This implementation carries out automatic keyword and sentence extraction on 10 
 To install the library run the `setup.py` module located in the repository's root directory.  Alternatively, if you have access to pip you may install the library directly from github:
 
 ```
-pip install git+git://github.com/davidadamojr/TextRank.git
+pip install git+https://github.com/davidadamojr/TextRank.git
 ```
 
 Use of the library requires downloading nltk resources.  Use the `textrank initialize` command to fetch the required data.  Once the data has finished downloading you may execute the following commands against the library:
